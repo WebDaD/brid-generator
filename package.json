@@ -1,0 +1,18 @@
+{
+  "name": "brid_get",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "options":{
+    "database":"/var/data/brids.json",
+    "port":25555,
+    "domain":"br.de",
+    "segment":"ng"
+  },
+  "dependencies": {
+    "express": "*",
+    "node-uuid":"*"
+  }
+}
