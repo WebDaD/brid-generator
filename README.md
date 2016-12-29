@@ -4,16 +4,16 @@ Ein einfacher node.js-Microservice zur Verwaltung von BRIDs (**BR**oadcast-**ID*
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 
-- [Formatdefinition für die eindeutige ID](#)
-	- [domain](#)
-	- [object_type](#)
-	- [use_type](#)
-	- [uuid](#)
-- [Datenmodell hinter der BRID](#)
-	- [Liste der Metadaten zur Erzeugung](#)
-	- [Finales Datenmodell](#)
-- [Ablauf](#)
-- [TODO](#)
+- [Formatdefinition für die eindeutige ID](#formatdefinition-für-die-eindeutige-id)
+	- [domain](#domain)
+	- [object_type](#object_type)
+	- [use_type](#use_type)
+	- [uuid](#uuid)
+- [Datenmodell hinter der BRID](#datenmodell-hinter-der-brid)
+	- [Liste der Metadaten zur Erzeugung](#liste-der-metadaten-zur-erzeugung)
+	- [Finales Datenmodell](#finales-datenmodell)
+- [Ablauf](#ablauf)
+- [TODO](#todo)
 
 ## Formatdefinition für die eindeutige ID
 
