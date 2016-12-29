@@ -9,7 +9,8 @@ Ein einfacher node.js-Microservice zur Verwaltung von BRIDs (**BR**oadcast-**ID*
 ### domain
 Spezifisch für die erstellende Rundfunkanstalt.
 
-Liste:
+
+
 | Domain | Langform |
 | ------ | -------- |
 | br.de  | Bayerischer Rundfunk |
@@ -20,7 +21,7 @@ Alle Formen von Geschäftsobjekten.
 Ein Geschäftsobjekt beschreibt die Produkte/Inhalte/Content/Events, in denen sich das
 Programmvermögen des BR manifestiert.
 
-Liste:
+
 | object | Beschreibung |
 | ------ | ------------ |
 | series | Serie |
@@ -42,7 +43,7 @@ Liste:
 ### use_type
 Was für ein BMF-Objekt wird referenziert.
 
-Liste:
+
 | use_type | Beschreibung |
 | -------- | ------------ |
 | content_series | Inhaltsobjekt Sendung |
@@ -57,8 +58,9 @@ Liste:
 
 
 ### uuid
-uuid basiert nicht auf System-ID, sondern ist abstrakt
-
+UUID basiert nicht auf System-ID, sondern ist abstrakt
+Ein UUID besteht aus einer 16-Byte-Zahl, die hexadezimal notiert wird. (siehe [https://tools.ietf.org/html/rfc4122](https://tools.ietf.org/html/rfc4122))
+In diesem Fall werden die trennenden Bindestriche gelöscht.
 
 ## Datenmodell hinter der BRID
 Zu jeder BRID gibt es einen eineindeutig beschreibenden Metadatensatz.
@@ -90,7 +92,7 @@ Das hier bekomme ich, wenn ich eine BRID abfrage
     "brid": "string",
     "title": "string",
     "ansprechpartner": {
-        "rolle":"string, zB Redaktuer, Autor",
+        "rolle":"string, zB Redakteur, Autor",
         "vorname":"string",
         "nachname":"string"       
     },
@@ -121,6 +123,7 @@ Nun kann ich jederzeit unter /v2/brid/[BRID] abfragen, was für Daten es zur Bri
 # TODO
 * Speicherung der Daten
 * Abfrage der Daten
+* Listen für BRID als API-Pfad
 * Unittests
 * Automatische Integrationstests
 * Testreporting
