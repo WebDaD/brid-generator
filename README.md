@@ -1,6 +1,20 @@
 # BRID-Verwalter
 Ein einfacher node.js-Microservice zur Verwaltung von BRIDs (**BR**oadcast-**ID**) für das  [BMF](http://bmf.irt.de/ "BMF")-Datenmodell der IRT.
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [BRID-Verwalter](#)
+	- [Formatdefinition für die eindeutige ID](#)
+		- [domain](#)
+		- [object_type](#)
+		- [use_type](#)
+		- [uuid](#)
+	- [Datenmodell hinter der BRID](#)
+		- [Liste der Metadaten zur Erzeugung](#)
+		- [Finales Datenmodell](#)
+	- [Ablauf](#)
+- [TODO](#)
+
 ## Formatdefinition für die eindeutige ID
 
 **brid://[domain]/[object_type]/[use_type]/[uuid]**
