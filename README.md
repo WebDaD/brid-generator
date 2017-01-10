@@ -39,9 +39,10 @@ Programmvermögen des BR manifestiert.
 | object | Beschreibung |
 | ------ | ------------ |
 | series | Serie |
-| episode | Sendungen |
-| contribution | Beiträge |
-| contract | Verträge |
+| episode | Folge |
+| program | Sendung |
+| item | Beitrag |
+| contract | Vertrag |
 | cutlist | Schnittliste |
 | musiclist | Musikliste |
 | article | Artikel |
@@ -54,14 +55,16 @@ Programmvermögen des BR manifestiert.
 | app | Apps |
 | mediathek | Mediatheken |
 
+(Vorläufige Liste. Wird später als Service über ein JSON-File implementiert.)
+
 ### use_type
 Was für ein BMF-Objekt wird referenziert.
 
 
 | use_type | Beschreibung |
 | -------- | ------------ |
-| content_series | Inhaltsobjekt Sendung |
-| content_contribution | Inhaltsobjekt Beitrag |
+| content_program | Inhaltsobjekt Sendung |
+| content_item | Inhaltsobjekt Beitrag |
 | story | Story aus weConnect |
 | distribution | Veröffentlichungsobjekt |
 | service | Serviceobjekt |
@@ -86,16 +89,17 @@ Das heißt, für jede BRID gibt es referenziert ein oder mehrere Planungsobjekte
 Mit diesen Daten bekomme ich eine BRID
 * Titel
 * Ansprechpartner
-    * Rolle
+    * Funktion wie z.B. Autor, Redakteur
     * Vorname
     * Nachname
 * Produktionsnummer
 * Kostenstelle
 * Kostenträger
 * Ressort
-* Redaktion
+* Redaktion/Organisationseinheit
 * System (Das System, dass die ID haben will)
-* ID (ID im System)
+* ID_internal (ID im System)
+* Anmerkung (Darf leer sein)
 
 
 ### Finales Datenmodell
@@ -106,7 +110,7 @@ Das hier bekomme ich, wenn ich eine BRID abfrage
     "brid": "string",
     "title": "string",
     "ansprechpartner": {
-        "rolle":"string, zB Redakteur, Autor",
+        "function":"string, zB Redakteur, Autor",
         "vorname":"string",
         "nachname":"string"       
     },
@@ -114,14 +118,15 @@ Das hier bekomme ich, wenn ich eine BRID abfrage
     "kostenstelle":"string",
     "kostentraeger":"string",
     "ressort":"string",
-    "redaktion":"string",
+    "organisationseinheit":"string",
     "instanzen": [
         {
             "system":"string, Name des Systems (zB WON)",
             "id":"string, ID im System",
             "description":"string, Beschreibung der Instanz"            
         }
-    ]
+    ],
+    "anmerkung":"string"
 }
 ```
 
