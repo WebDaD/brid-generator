@@ -1,0 +1,16 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": false,
+  "hostname": "fh-hfv-mdgateway01.hf.brnet.int",
+  "port": "22",
+  "target": "/opt/brid_generator",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "administrator",
+  "password": "service4$tt",
+  "watch": [],
+  "transport": "scp"
+}

@@ -1,0 +1,18 @@
+[
+  {"key":"series", "description":"Serie"},
+  {"key":"episode", "description":"Folge"},
+  {"key":"program", "description":"Sendung"},
+  {"key":"item", "description":"Beitrag"},
+  {"key":"contract", "description":"Vertrag"},
+  {"key":"cutlist", "description":"Schnittliste"},
+  {"key":"musiclist", "description":"Musikliste"},
+  {"key":"article", "description":"Artikel"},
+  {"key":"script", "description":"Manuskript"},
+  {"key":"picture", "description":"Foto"},
+  {"key":"dossier", "description":"Dossier"},
+  {"key":"mediabox", "description":"Mediaboxen"},
+  {"key":"infografic", "description":"Infografiken"},
+  {"key":"animation", "description":"Animationen"},
+  {"key":"app", "description":"Apps"},
+  {"key":"mediathek", "description":"Mediatheken"}
+]

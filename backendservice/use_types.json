@@ -1,0 +1,11 @@
+[
+  {"key":"content_program", "description": "Inhaltsobjekt Sendung"} ,
+  {"key":"content_item", "description": "Inhaltsobjekt Beitrag"} ,
+  {"key":"story", "description": "Story aus weConnect"} ,
+  {"key":"distribution", "description": "Veröffentlichungsobjekt"} ,
+  {"key":"service", "description": "Serviceobjekt"} ,
+  {"key":"multimedia", "description": "Multimediaobjekt"} ,
+  {"key":"grouping", "description": "Gruppierungsobjekt (Serie etc.)"} ,
+  {"key":"resource", "description": "Ressource"} ,
+  {"key":"resource_management", "description": "Ressourcen-Management"}
+]

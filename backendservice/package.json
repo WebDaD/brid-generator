@@ -1,0 +1,24 @@
+{
+  "name": "brid_generator",
+  "version": "0.1.8",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "postinstall": "",
+    "test":""
+  },
+  "options":{
+    "database":"/var/data/brid/",
+    "port":25555,
+    "use_types":"/var/data/brid/use_types.json",
+    "object_types":"/var/data/brid/object_types.json",
+    "domains":"/var/data/brid/domains.json"
+  },
+  "dependencies": {
+    "express": "*",
+    "node-uuid":"*",
+    "js2xmlparser":"*",
+    "json2csv":"*",
+    "jsonfile":"*"
+  }
+}
