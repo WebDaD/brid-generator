@@ -16,7 +16,13 @@
 * @param {object} data_export - lib object having function sendData(req, res, json) which exports the json data
 */
 module.exports = function (app, use_types, object_types, domains, data_export) {
-  app.get('/use_types.:rep'+data_export.reFormats(),data_export.sendData(use_types, 'use_types'))
-  app.get('/object_types.:rep'+data_export.reFormats(),data_export.sendData(object_types, 'object_types'))
-  app.get('/domains.:rep'+data_export.reFormats(),data_export.sendData(domains, 'domains'))
+  app.get('/use_types.:rep'+data_export.reFormats(), function (req, res) {
+    data_export.send(req, res, use_types, 'use_types'))
+  })
+  app.get('/object_types.:rep'+data_export.reFormats(), function (req, res) {
+    data_export.send(req, res, object_types, 'object_types'))
+  })
+  app.get('/domains.:rep'+data_export.reFormats(), function (req, res) {
+    data_export.send(req, res, domains, 'domains'))
+  })
 }

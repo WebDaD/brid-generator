@@ -21,29 +21,6 @@ function data_export () {
   return self
 }
 
-function sendData (jsonArray, name) {
-  var self = this
-  return function (req, res, next) {
-    switch (req.params.rep) {
-      case 'json':
-        res.setHeader('Content-Type', 'application/json')
-        res.send(jsonArray)
-        break
-      case 'xml':
-        res.setHeader('Content-Type', 'application/xml')
-        res.send(self.xml2json.parse(name, jsonArray))
-        break
-      case 'csv':
-        res.setHeader('Content-Type', 'text/csv')
-        res.send(self.json2csv({data: jsonArray}))
-        break
-      default:
-        res.setHeader('Content-Type', 'application/json')
-        res.send(jsonArray)
-        break
-    }
-  }
-}
 function send (req, res, jsonArray, name) {
   var self = this
   switch (req.params.rep) {
