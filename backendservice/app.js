@@ -8,6 +8,7 @@ var app = express()
 var server = require('http').createServer(app)
 var path = require('path')
 var jsonfile = require('jsonfile')
+var bodyParser = require('body-parser')
 
 var pack = require('./package.json')
 var data_export = require('./lib/data_export.js')
@@ -21,6 +22,9 @@ if (typeof process.argv[2] !== 'undefined') {
 	port = pack.options.port;
 }
 console.log('Port set to '+port)
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 console.log('Reading in Data Files...')
 var use_types = jsonfile.readFileSync(pack.options.use_types)

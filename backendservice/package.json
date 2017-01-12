@@ -19,6 +19,7 @@
     "node-uuid":"*",
     "js2xmlparser":"*",
     "json2csv":"*",
-    "jsonfile":"*"
+    "jsonfile":"*",
+    "body-parser":"*"
   }
 }

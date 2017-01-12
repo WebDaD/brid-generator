@@ -13,7 +13,6 @@ function data_export () {
   var self = {}
   self.xml2json = require('js2xmlparser')
   self.json2csv = require('json2csv')
-  self.sendData = sendData
   self.send = send
   self.sendError = sendError
   self.formats = ['json', 'xml', 'csv']
@@ -42,9 +41,9 @@ function send (req, res, jsonArray, name) {
       break
   }
 }
-function sendError (error) {
-  res.setStatus(500)
-  send(error, 'Error')
+function sendError (req, res, error) {
+  res.status(error.status)
+  send(req, res, error, 'Error')
 }
 function reFormats () {
   var self = this

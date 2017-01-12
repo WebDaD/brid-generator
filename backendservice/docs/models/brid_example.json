@@ -1,0 +1,26 @@
+{
+"brid": "brid:://br.de/series/distribution/1aa116bcdc684414b0750c886e8eb4f6",
+"domain": "br.de",
+"object_type": "series",
+"use_type": "dístribution",
+"uuid": "1aa116bcdc684414b0750c886e8eb4f6",
+"title": "Test",
+"ansprechpartner": {
+"function": "Entwickler",
+"vorname": "Dominik",
+"nachname": "Sigmund"
+},
+"produktionsnummer": "001238",
+"kostenstelle": "3805",
+"kostentraeger": "BAp",
+"ressort": "resistance",
+"organisationseinheit": "SuA",
+"instanzen": [
+  {
+    "system":"WhatsOn",
+    "id":"123412341341235",
+    "description":"WhatsOn Trailer" 
+  }
+],
+"anmerkung": "Erster Test"
+}

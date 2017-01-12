@@ -17,12 +17,12 @@
 */
 module.exports = function (app, use_types, object_types, domains, data_export) {
   app.get('/use_types.:rep'+data_export.reFormats(), function (req, res) {
-    data_export.send(req, res, use_types, 'use_types'))
+    data_export.send(req, res, use_types, 'use_types')
   })
   app.get('/object_types.:rep'+data_export.reFormats(), function (req, res) {
-    data_export.send(req, res, object_types, 'object_types'))
+    data_export.send(req, res, object_types, 'object_types')
   })
   app.get('/domains.:rep'+data_export.reFormats(), function (req, res) {
-    data_export.send(req, res, domains, 'domains'))
+    data_export.send(req, res, domains, 'domains')
   })
 }

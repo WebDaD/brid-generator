@@ -87,6 +87,9 @@ Das heißt, für jede BRID gibt es referenziert ein oder mehrere Planungsobjekte
 
 ### Liste der Metadaten zur Erzeugung
 Mit diesen Daten bekomme ich eine BRID
+* Domain
+* Object_Type
+* Use_Type
 * Titel
 * Ansprechpartner
     * Funktion wie z.B. Autor, Redakteur
@@ -99,7 +102,6 @@ Mit diesen Daten bekomme ich eine BRID
 * Redaktion/Organisationseinheit
 * System (Das System, dass die ID haben will)
 * ID_internal (ID im System)
-* Anmerkung (Darf leer sein)
 
 
 ### Finales Datenmodell
@@ -108,7 +110,11 @@ Das hier bekomme ich, wenn ich eine BRID abfrage
 ```json
 {
     "brid": "string",
-    "title": "string",
+		"domain":"string",
+		"object_type": "string",
+		"use_type":"string",
+		"uuid":"string",
+		"title": "string",
     "ansprechpartner": {
         "function":"string, zB Redakteur, Autor",
         "vorname":"string",
@@ -137,16 +143,3 @@ Als Antwort bekomme ich eine HTTP 200 oder 201 mit der BRID.
 * 201 wenn eine neue BRID erzeugt wurde. Auch dann werden meine ID-informationen in den Instanzen angehängt
 
 Nun kann ich jederzeit unter /v2/brid/[BRID] abfragen, was für Daten es zur Brid gibt.
-
-
-# TODO
-* Speicherung der Daten
-* Abfrage der Daten
-* Listen für BRID als API-Pfad
-* Unittests
-* Automatische Integrationstests
-* Testreporting
-* Randomized Data Tests
-* Lasttests
-* Build-Helper
-* API-Dokumentation mit RAML

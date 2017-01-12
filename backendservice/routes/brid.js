@@ -18,12 +18,21 @@
 module.exports = function (app, use_types, object_types, domains, brid, data_export) {
   app.get('/brid.:rep' + data_export.reFormats(), function (req, res) {
   	brid.list({}, function (error, brids) {
-    if (error) {
-      data_export.sendError(req, res, error)
-    } else {
-      data_export.send(req, res, brids, 'brids')
-    }
+      if (error) {
+        data_export.sendError(req, res, error)
+      } else {
+        data_export.send(req, res, brids, 'brids')
+      }
+    })
   })
+  app.get('/brid/search.:rep' + data_export.reFormats() + '?', function (req, res) {
+    brid.search(req.query, function (error, brids) {
+      if (error) {
+        data_export.sendError(req, res, error)
+      } else {
+        data_export.send(req, res, brids, 'search_results')
+      }
+    })
   })
   app.get('/brid/:brid_domain.:rep' + data_export.reFormats(), function (req, res) {
     brid.list({domain: req.params.brid_domain}, function (error, brids) {
@@ -53,18 +62,21 @@ module.exports = function (app, use_types, object_types, domains, brid, data_exp
     })
   })
   app.get('/brid/:brid_domain/:brid_object_type/:brid_use_type/:brid_uuid.:rep' + data_export.reFormats(), function (req, res) {
-    brid.get({domain: req.params.brid_domain, object_type: req.params.brid_object_type, use_type: req.params.brid_use_type, uuid:req.params.brid_uuid}, function (error, data) {
+    brid.get({domain: req.params.brid_domain, object_type: req.params.brid_object_type, use_type: req.params.brid_use_type, uuid: req.params.brid_uuid}, function (error, data) {
       if (error) {
         data_export.sendError(req, res, error)
       } else {
-        data_export.send(req, res, data, brid)
+        data_export.send(req, res, data, data.brid)
       }
     })
   })
-  app.get('/brid/search.:rep' + data_export.reFormats(), function(req, res){
-    // TODO search with query parmams
-  })
   app.post('/brid.:rep' + data_export.reFormats(), function (req, res) {
-    // TODO create / get a brid (on get add reference), body has data
+    brid.getBRID(req.body, function (error, success) {
+      if (error) {
+        data_export.sendError(req, res, error)
+      } else {
+        res.status(success.status).send(success.brid)
+      }
+    })
   })
 }
