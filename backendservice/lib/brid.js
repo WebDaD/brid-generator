@@ -1,4 +1,4 @@
-var uuid = require('node-uuid')
+var uuidV4 = require('uuid/v4')
 var fs = require('fs')
 var path = require('path')
 var jsonfile = require('jsonfile')
@@ -96,12 +96,17 @@ function search (filter, callback) { // filter = object with quey parms
           var keys = 0
           Object.keys(filter).forEach(function (key) {
             keys++
-            // TODO: searchable sub-fields (like vorname)
+            brid["ansprechpartner_function"] = brid.ansprechpartner.function
+            brid["ansprechpartner_vorname"] = brid.ansprechpartner.vorname
+            brid["ansprechpartner_nachname"] = brid.ansprechpartner.nachname
             if (brid.hasOwnProperty(key) && brid[key] == filter[key]) {
               matches++
             }
           })
           if (matches == keys) {
+            delete brid.ansprechpartner_function
+            delete brid.ansprechpartner_vorname
+            delete brid.ansprechpartner_nachname
             result.push(brid)
           }
         })
@@ -121,10 +126,9 @@ function getBRID (metadata, callback) { // callback -> status and brid (status 2
       metadata.hasOwnProperty('object_type') &&
       metadata.hasOwnProperty('use_type') &&
       metadata.hasOwnProperty('title') &&
-      metadata.hasOwnProperty('ansprechpartner') &&
-      metadata.ansprechpartner.hasOwnProperty('function') &&
-      metadata.ansprechpartner.hasOwnProperty('vorname') &&
-      metadata.ansprechpartner.hasOwnProperty('nachname') &&
+      metadata.hasOwnProperty('ansprechpartner_function') &&
+      metadata.hasOwnProperty('ansprechpartner_vorname') &&
+      metadata.hasOwnProperty('ansprechpartner_nachname') &&
       metadata.hasOwnProperty('produktionsnummer') &&
       metadata.hasOwnProperty('kostenstelle') &&
       metadata.hasOwnProperty('kostentraeger') &&
@@ -149,14 +153,14 @@ function getBRID (metadata, callback) { // callback -> status and brid (status 2
         newBrid = addBRIDObject(metadata)
         status = 201
       } else {
-        newBrid = addInstanceToObject(metadata)
+        newBrid = addInstanceToObject(search_results[0].uuid, metadata)
         status = 302
       }
       saveBRIDObjectToDatabase(newBrid, function (error) {
-        if(error) {
+        if (error) {
           return callback({status: 501, message: error})
         } else {
-          return callback(null, {brid:newBrid.brid, status:status})
+          return callback(null, {brid: newBrid.brid, status: status})
         }
       })
     })
@@ -164,13 +168,38 @@ function getBRID (metadata, callback) { // callback -> status and brid (status 2
     return callback({status: 400, message: 'Missing Fields!'})
   }
 }
-function addBRIDObject(metadata) { //returns brid-object, save to self.brids
-  //TODO: reformat object, save in array, create BRID
+function addBRIDObject (metadata) { // returns brid-object, save to self.brids
+  var self = this
+  var uuid = uuidV4().replace(/-/g, "")
+  var brid = {}
+  brid.brid = 'brid://'+metadata.domain+'/'+metadata.object_type+'/'+metadata.use_type+'/'+uuid
+  brid.domain = metadata.domain
+  brid.object_type = metadata.object_type
+  brid.use_type = metadata.use_type
+  brid.uuid = uuid
+  brid.title = metadata.title
+  brid.ansprechpartner = {}
+  brid.ansprechpartner.function = metadata.ansprechpartner_function
+  brid.ansprechpartner.vorname = metadata.ansprechpartner_vorname
+  brid.ansprechpartner.nachname = metadata.ansprechpartner_nachname
+  brid.produktionsnummer = metadata.produktionsnummer
+  brid.kostenstelle = metadata.kostenstelle
+  brid.kostentraeger = metadata.kostentraeger
+  brid.ressort = metadata.ressort
+  brid.organisationseinheit = metadata.organisationseinheit
+  brid.instanzen = []
+  brid.instanzen.push({id:metadata.id_internal, system:metadata.system, description:''})
+  brid.anmerkung = metadata.hasOwnProperty('anmerkung') ? metadata.anmerkung : ''
+  self.brids[brid.domain][brid.object_type][brid.use_type][brid.uuid] = brid
+  return brid
 }
-function addInstanceToObject(metadata) { //returns brid-object, save to self.brids
-  //TODO: add information to instances
+function addInstanceToObject (uuid, metadata) { // returns brid-object, save to self.brids
+  var self = this
+  self.brids[metadata.domain][metadata.object_type][metadata.use_type][uuid].instanzen.push({id:metadata.id_internal, system:metadata.system, description:''})
+  return self.brids[metadata.domain][metadata.object_type][metadata.use_type][uuid]
 }
-function saveBRIDObjectToDatabase(brid, callback) { // error only callback
-  //TODO: mainly save to correct path / file wirh jsonfile
+function saveBRIDObjectToDatabase (brid, callback) { // error only callback
+  var self = this
+  jsonfile.writeFile(path.join(self.database, brid.domain, brid.object_type, brid.use_type, brid.uuid) + '.json', brid, callback)
 }
 module.exports = brid

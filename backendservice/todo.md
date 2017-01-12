@@ -14,3 +14,5 @@
 * installation (copy json files)
 
 * jsdoc
+
+* domain/... ect json to nice tables for doc

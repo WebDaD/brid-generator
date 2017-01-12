@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "express": "*",
-    "node-uuid":"*",
+    "uuid":"*",
     "js2xmlparser":"*",
     "json2csv":"*",
     "jsonfile":"*",

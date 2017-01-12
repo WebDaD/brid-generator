@@ -91,10 +91,9 @@ Mit diesen Daten bekomme ich eine BRID
 * Object_Type
 * Use_Type
 * Titel
-* Ansprechpartner
-    * Funktion wie z.B. Autor, Redakteur
-    * Vorname
-    * Nachname
+* Ansprechpartner-Funktion wie z.B. Autor, Redakteur
+* Ansprechpartner-Vorname
+* Ansprechpartner-Nachname
 * Produktionsnummer
 * Kostenstelle
 * Kostenträger
@@ -103,10 +102,53 @@ Mit diesen Daten bekomme ich eine BRID
 * System (Das System, dass die ID haben will)
 * ID_internal (ID im System)
 
+Senden muss ich also folgendes Object:
+
+#### json
+```json
+{
+		"domain":"string",
+		"object_type": "string",
+		"use_type":"string",
+		"title": "string",
+    "ansprechpartner_function":"string, zB Redakteur, Autor",
+    "ansprechpartner_vorname":"string",
+    "ansprechpartner_nachname":"string",
+    "produktionsnummer":"string",
+    "kostenstelle":"string",
+    "kostentraeger":"string",
+    "ressort":"string",
+    "organisationseinheit":"string",
+    "system":"string, Name des Systems (zB WON)",
+    "id_internal":"string, ID im System"
+}
+```
+
+#### xml
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<metadata>
+  <domain>string</domain>
+  <object_type>string</object_type>
+  <use_type>string</use_type>
+  <title>string</title>
+  <ansprechpartner_function>string, zB Redakteur, Autor</ansprechpartner_function>
+  <ansprechpartner_vorname>string</ansprechpartner_vorname>
+  <ansprechpartner_nachname>string</ansprechpartner_nachname>
+  <produktionsnummer>string</produktionsnummer>
+  <kostenstelle>string</kostenstelle>
+  <kostentraeger>string</kostentraeger>
+  <ressort>string</ressort>
+  <organisationseinheit>string</organisationseinheit>
+  <system>string, Name des Systems (zB WON)</system>
+  <id_internal>string, ID im System</id_internal>
+</metadata>
+```
 
 ### Finales Datenmodell
 Das hier bekomme ich, wenn ich eine BRID abfrage
 
+#### json
 ```json
 {
     "brid": "string",
@@ -136,10 +178,39 @@ Das hier bekomme ich, wenn ich eine BRID abfrage
 }
 ```
 
+#### xml
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<brid>
+  <brid>string</brid>
+  <domain>string</domain>
+  <object_type>string</object_type>
+  <use_type>string</use_type>
+  <uuid>string</uuid>
+  <title>string</title>
+  <ansprechpartner>
+    <function>string, zB Redakteur, Autor</function>
+    <vorname>string</vorname>
+    <nachname>string</nachname>
+  </ansprechpartner>
+  <produktionsnummer>string</produktionsnummer>
+  <kostenstelle>string</kostenstelle>
+  <kostentraeger>string</kostentraeger>
+  <ressort>string</ressort>
+  <organisationseinheit>string</organisationseinheit>
+  <instanzen>
+    <system>string, Name des Systems (zB WON)</system>
+    <id>string, ID im System</id>
+    <description>string, Beschreibung der Instanz</description>
+  </instanzen>
+  <anmerkung>string</anmerkung>
+</brid>
+```
+
 ## Ablauf
-Ich setze einen http-POST auf die Route /v2/brid mit den Metadaten als Objekt ab.
-Als Antwort bekomme ich eine HTTP 200 oder 201 mit der BRID.
-* 200 wenn es die ID schon gibt. Dann werden meine ID-informationen in den Instanzen angehängt
+Ich setze einen http-POST auf die Route /brid mit den Metadaten als Objekt ab.
+Als Antwort bekomme ich eine HTTP 302 oder 201 mit der BRID.
+* 302 wenn es die ID schon gibt. Dann werden meine ID-informationen in den Instanzen angehängt
 * 201 wenn eine neue BRID erzeugt wurde. Auch dann werden meine ID-informationen in den Instanzen angehängt
 
-Nun kann ich jederzeit unter /v2/brid/[BRID] abfragen, was für Daten es zur Brid gibt.
+Nun kann ich jederzeit unter /brid/[BRID] abfragen, was für Daten es zur Brid gibt.
