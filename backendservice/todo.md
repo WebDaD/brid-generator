@@ -1,7 +1,6 @@
 # TODO
-* Speicherung der Daten
 
-* Listen für BRID als API-Pfad
+
 * Unittests
 * Automatische Integrationstests
 * Testreporting
@@ -9,9 +8,9 @@
 * Lasttests
 * Build-Helper
 * API-Dokumentation mit RAML
-* brid.json model
+* models
 
-* installation (copy json files)
+* installation (copy json files, create folder structure)
 
 * jsdoc
 

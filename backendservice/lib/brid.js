@@ -13,32 +13,35 @@ function brid (database, domains, object_types, use_types) {
   self.get = get
   self.search = search
   self.getBRID = getBRID
+  self.saveBRIDObjectToDatabase = saveBRIDObjectToDatabase
+  self.addBRIDObject = addBRIDObject
+  self.addInstanceToObject = addInstanceToObject
   self.brids = {}
   if (fs.existsSync(self.database)) { // check if database folder exists
-    for (var i = 0, len = self.domains.length; i < len; i++) { // loop domains
+    for (var i = 0, leni = self.domains.length; i < leni; i++) { // loop domains
       var domain = self.domains[i].domain
       var path_domain = path.join(self.database, domain)
       if (!fs.existsSync(path_domain)) { // if domain folder does not exist, create it
-        fs.mkdir(path_domain, 777)
+        fs.mkdirSync(path_domain)
       }
       self.brids[domain] = {}
-      for (var j = 0, len = self.object_types.length; j < len; j++) { // loop object_types
+      for (var j = 0, lenj = self.object_types.length; j < lenj; j++) { // loop object_types
         var object_type = self.object_types[j].key
         var path_object_type = path.join(path_domain, object_type)
         if (!fs.existsSync(path_object_type)) { // if object_type folder does not exist, create it
-          fs.mkdir(path_object_type, 777)
+          fs.mkdirSync(path_object_type)
         }
         self.brids[domain][object_type] = {}
-        for (var k = 0, len = self.use_types.length; k < len; k++) { // loop use_types
+        for (var k = 0, lenk = self.use_types.length; k < lenk; k++) { // loop use_types
           var use_type = self.use_types[k].key
           var path_use_type = path.join(path_object_type, use_type)
           if (!fs.existsSync(path_use_type)) { // if use_type folder does not exist, create it
-            fs.mkdir(path_use_type, 777)
+            fs.mkdirSync(path_use_type)
           }
           self.brids[domain][object_type][use_type] = {}
           var files = fs.readdirSync(path_use_type)
           if (files.length > 0) {
-            for (var l = 0, len = files.length; l < len; l++) { // loop files (uuids) in folder
+            for (var l = 0, lenl = files.length; l < lenl; l++) { // loop files (uuids) in folder
               var file = files[l]
               var uuid = file.replace('.json', '')
               self.brids[domain][object_type][use_type][uuid] = jsonfile.readFileSync(path.join(path_use_type, file))
@@ -137,26 +140,30 @@ function getBRID (metadata, callback) { // callback -> status and brid (status 2
       metadata.hasOwnProperty('system') &&
       metadata.hasOwnProperty('id_internal')
     ) {
-    if (self.domains.filter(function (e) { e.domain == metadata.domain }).length < 1) {
+
+    if (self.domains.filter(function (e) { return e.domain == metadata.domain }).length < 1) {
       return callback({status: 400, message: metadata.domain + ' is not in List of Domains!'})
     }
-    if (self.object_types.filter(function (e) { e.key == metadata.object_type }).length < 1) {
+    if (self.object_types.filter(function (e) { return e.key == metadata.object_type }).length < 1) {
       return callback({status: 400, message: metadata.object_type + ' is not in List of object_types!'})
     }
-    if (self.use_types.filter(function (e) { e.key == metadata.use_type }).length < 1) {
+    if (self.use_types.filter(function (e) { return e.key == metadata.use_type }).length < 1) {
       return callback({status: 400, message: metadata.use_type + ' is not in List of use_types!'})
     }
-    self.search(metadata, function (error, search_results) {
+    var md_filter = JSON.parse(JSON.stringify(metadata))
+    delete md_filter.system
+    delete md_filter.id_internal
+    self.search(md_filter, function (error, search_results) {
       var newBrid = null
       var status = 200
       if (error) {
-        newBrid = addBRIDObject(metadata)
+        newBrid = self.addBRIDObject(metadata)
         status = 201
       } else {
-        newBrid = addInstanceToObject(search_results[0].uuid, metadata)
+        newBrid = self.addInstanceToObject(search_results[0].uuid, metadata)
         status = 302
       }
-      saveBRIDObjectToDatabase(newBrid, function (error) {
+      self.saveBRIDObjectToDatabase(newBrid, function (error) {
         if (error) {
           return callback({status: 501, message: error})
         } else {
@@ -195,6 +202,7 @@ function addBRIDObject (metadata) { // returns brid-object, save to self.brids
 }
 function addInstanceToObject (uuid, metadata) { // returns brid-object, save to self.brids
   var self = this
+  //TODO: check first if instance is already written
   self.brids[metadata.domain][metadata.object_type][metadata.use_type][uuid].instanzen.push({id:metadata.id_internal, system:metadata.system, description:''})
   return self.brids[metadata.domain][metadata.object_type][metadata.use_type][uuid]
 }
